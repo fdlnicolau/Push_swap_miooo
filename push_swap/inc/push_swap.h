@@ -6,7 +6,7 @@
 /*   By: lnicolau <lnicolau@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:49:18 by lnicolau          #+#    #+#             */
-/*   Updated: 2024/04/24 14:33:10 by lnicolau         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:06:31 by lnicolau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ typedef struct s_stack
 {
 	int				number;
 	struct s_stack	*next;
-	int				values;
+	int				value;
+	int				index;
+	int				pos;
+	int				objetive;
 }				t_stack;
 
 void	init_program(t_stack ***stack_a, t_stack ***stack_b);

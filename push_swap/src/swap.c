@@ -6,7 +6,7 @@
 /*   By: lnicolau <lnicolau@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:17:45 by lnicolau          #+#    #+#             */
-/*   Updated: 2024/04/25 15:35:24 by lnicolau         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:47:34 by lnicolau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,46 @@ void swap(t_stack **stack)
 		*stack = (*stack)->next;
 		(*stack)->next = tmp;
 	}
+}
+void rotate_a(t_stack **stack_a, int flag)
+{
+	t_stack *first;
+	t_stack *last;
+
+	if(!(*stack_a) || (!(*stack_a)-> next))
+		return(FALSE);
+	first = *stack_a;
+	*stack_a = (*stack_a)->next;
+	last = *stack_a;
+	while(last->next)
+		last = last->next;
+	last->next = first;
+	first->next = NULL;
+
+	if(flag == 1)
+		ft_printf("ra\n");
+	
+}
+void rotate_b(t_stack **stack_b, int flag)
+{
+	t_stack *first;
+	t_stack *last;
+	
+	first = *stack_b;
+	last = *stack_b;
+	while(last->next)
+		last = last->next;
+	last->next = first;
+	first->next = NULL;
+	
+	if(flag == 1)
+		ft_printf("rb\n");
+}
+void	rotate_rt(t_stack **stack_a, t_stack **stack_b, int flag)
+{
+	rotate_a(stack_a, 0);
+	rotate_b(stack_b, 0);
+
+	if(flag == 1)
+		ft_printf("rr\n");
 }

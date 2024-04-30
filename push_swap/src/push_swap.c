@@ -6,7 +6,7 @@
 /*   By: lnicolau <lnicolau@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 22:16:53 by lnicolau          #+#    #+#             */
-/*   Updated: 2024/04/24 16:30:09 by lnicolau         ###   ########.fr       */
+/*   Updated: 2024/04/30 14:55:56 by lnicolau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	transfer_stack(char *string_value, t_stack **ptr_stack)
 	new_node = malloc(sizeof(t_stack));
 	if(new_node = NULL)
 		return(FALSE);
-	new_node->values = value;
+	new_node->value = value;
 	new_node->next = NULL;
 	if(*ptr_stack == NULL)
 		*ptr_stack = new_node;
@@ -153,7 +153,7 @@ int main (int argc, char **argv)
 		}
 		i++;
 	}
-	if(!ft_sorted_list(stack_a))
+	if(!list_sorted(stack_a)) 
 	{
 		best_algorit(stack_a, stack_b, i);
 	}
