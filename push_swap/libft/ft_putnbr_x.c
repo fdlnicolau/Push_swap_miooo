@@ -6,11 +6,11 @@
 /*   By: lnicolau <lnicolau@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 18:36:38 by lnicolau          #+#    #+#             */
-/*   Updated: 2023/11/28 17:23:49 by lnicolau         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:18:57 by lnicolau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static void	ft_c(unsigned long nbr, int *c)
 {

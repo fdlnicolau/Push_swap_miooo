@@ -6,11 +6,12 @@
 /*   By: lnicolau <lnicolau@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:17:45 by lnicolau          #+#    #+#             */
-/*   Updated: 2024/04/30 15:47:34 by lnicolau         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:20:17 by lnicolau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../inc/push_swap.h"
+
 void	swap_a(t_stack **stack_a, int flag)
 {
 	swap(stack_a);
@@ -20,7 +21,7 @@ void	swap_a(t_stack **stack_a, int flag)
 void swap(t_stack **stack)
 {
 	t_stack	*tmp;
-	if(stacksize(*stack) > 1)
+	if(stack_size(*stack) > 1)
 	{
 		tmp = *stack;
 		*stack = (*stack)->next;
@@ -33,7 +34,7 @@ void rotate_a(t_stack **stack_a, int flag)
 	t_stack *last;
 
 	if(!(*stack_a) || (!(*stack_a)-> next))
-		return(FALSE);
+		return;
 	first = *stack_a;
 	*stack_a = (*stack_a)->next;
 	last = *stack_a;
@@ -69,3 +70,4 @@ void	rotate_rt(t_stack **stack_a, t_stack **stack_b, int flag)
 	if(flag == 1)
 		ft_printf("rr\n");
 }
+

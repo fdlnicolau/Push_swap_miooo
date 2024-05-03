@@ -6,49 +6,53 @@
 /*   By: lnicolau <lnicolau@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 22:16:53 by lnicolau          #+#    #+#             */
-/*   Updated: 2024/04/30 14:55:56 by lnicolau         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:41:41 by lnicolau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/push_swap.h"
+#include "../inc/push_swap.h"
 
-void	init_program(t_stack ***stack_a, t_stack ***stack_b)
-{
-	*stack_a = malloc(sizeof(t_stack *));
-	if(*stack_a == NULL)
-	{
-		ft_printf("Error\n");
-		exit(EXIT_FAILURE);
-	}
-	**stack_a = NULL;
-	*stack_b = malloc(sizeof(t_stack *));
-	if(*stack_b == NULL)
-	{
-		ft_printf("Error\n");
-		exit(EXIT_FAILURE);
-	}
-	**stack_b = NULL;
-}
+// void	init_program(t_stack ***stack_a, t_stack ***stack_b)
+// {
+// 	*stack_a = malloc(sizeof(t_stack *));
+// 	if(*stack_a == NULL)
+// 	{
+// 		ft_printf("Error\n");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	**stack_a = NULL;
+// 	*stack_b = malloc(sizeof(t_stack *));
+// 	if(*stack_b == NULL)
+// 	{
+// 		ft_printf("Error\n");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	**stack_b = NULL;
+// }
 int is_valid_number (char **str)
 {
 	int i;
+	int j;
+	
 	i =	0;
+	j = 0;
+	if(str[i] == NULL)
+		return(FALSE);
 	while (str[i] != NULL)
 	{
-		if ((str[i][0] == '+' || str[i][0] == '-') && is_valid_number(&str[i] + 1)) 
-			i++;
-		while (str[i] != NULL && is_valid_number(&str[i]))
+		j = 0;
+		if ((str[i][j] == '+' || str[i][j] == '-')) 
+			j++;
+		while (str[i][j] != 0 && (str[i][j] <= '9' && str[i][j] >= '0'))
 		{
-			if (ft_atoi(str[i]) < -2147483648 || ft_atoi(str[i]) > 2147483647)
-				return (FALSE);
-			i++;
+			j++;
 		}
-		if (str[i] == NULL)
-			return (TRUE);
+		if (str[i][j] == '\0')
+			i++;
 		else
 			return (FALSE);
 	}
-	return (FALSE);
+	return (TRUE);
 }
 
 int	check_dupli(char **str)
@@ -61,7 +65,7 @@ int	check_dupli(char **str)
 		j = i + 1;
 		while (str[j] != NULL)
 		{
-			if (ft_strncmp(str[i], str[j], ft_strlen(str[i])) == 0)
+			if (ft_strncmp(str[i], str[j], 15) == 0)//CERDADA!!!! YEAH
 				return (FALSE);
 			j++;
 		}
@@ -105,58 +109,88 @@ char **check_argv(int argc, char **argv)
 	}
 }
 
-int	transfer_stack(char *string_value, t_stack **ptr_stack)
+long	ft_atol(const char *str)
+{
+	long	digit;
+	int		i;
+	int		sig;
+
+	i = 0;
+	digit = 0;
+	sig = 1;
+	while (((str[i] >= 9) && (str[i] <= 13)) || (str[i] == 32))
+		i++;
+	if (str[i] == '+')
+		i++;
+	else if (str[i] == '-')
+	{
+		sig *= -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		digit = (digit * 10) + (str[i] - '0');
+		i++;
+	}
+	return (digit * sig);
+}
+
+t_stack*	transfer_stack(char *string_value, t_stack *ptr_stack)
 {
 	t_stack 	*current;
 	t_stack 	*new_node;
-	int 		value;
+	long 		value;
 	
-	value = ft_atoi(string_value);
-	new_node = malloc(sizeof(t_stack));
-	if(new_node = NULL)
-		return(FALSE);
+	value = ft_atol(string_value);
+	if (value < -2147483648 || value > 2147483647)
+			return (NULL);
+	new_node = malloc(sizeof(t_stack*));
+	if(new_node == NULL)
+		return(NULL);
 	new_node->value = value;
 	new_node->next = NULL;
-	if(*ptr_stack == NULL)
-		*ptr_stack = new_node;
+
+	if(ptr_stack == NULL)
+		ptr_stack = new_node;
 	else
 	{
-		if(ptr_stack == NULL)
-			return(FALSE);
-		current = *ptr_stack;
+		current = ptr_stack;
 		while(current->next != NULL)
 		{
 			current = current->next;
 		}
 		current->next = new_node;
 	}
-	return(TRUE)
-	
+	return(ptr_stack);
 }
 int main (int argc, char **argv)
 {
-	t_stack		**stack_a;
-	t_stack 	**stack_b;
+	t_stack		*stack_a;
+	t_stack 	**stack_b = NULL;
 	char 		**str;
 	int 		i;
 
 	i = 0;
-
-	init_program(&stack_a, &stack_b);
+	// init_program(&stack_a, &stack_b);
 	str = check_argv(argc, argv);
-	while(str[i] != NULL)
+	stack_a = transfer_stack(str[i], NULL);
+	if(stack_a == NULL)
+		exit(EXIT_FAILURE);
+	while(str[++i] != NULL)
 	{
-		if(transfer_stack(str[i], stack_a) == NULL)
+		stack_a = transfer_stack(str[i], stack_a);
+		if(stack_a == FALSE)
 		{
 			ft_printf("Error\n");
 			exit(EXIT_FAILURE);
 		}
-		i++;
 	}
-	if(!list_sorted(stack_a)) 
+	print_stack(stack_a, NULL);
+	if(!list_sorted(&stack_a)) 
 	{
-		best_algorit(stack_a, stack_b, i);
+		best_algorit(&stack_a, stack_b, stack_size(stack_a));
 	}
+	print_stack(stack_a, NULL);
 	return(0);
 }
 /* int is_valid_number(char *str)

@@ -6,11 +6,12 @@
 /*   By: lnicolau <lnicolau@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:47:51 by lnicolau          #+#    #+#             */
-/*   Updated: 2024/04/30 16:36:25 by lnicolau         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:15:15 by lnicolau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/push_swap.h"
+#include "../inc/push_swap.h"
+
 void organize_three (t_stack **stack_a)
 {
     t_stack *first;
@@ -26,7 +27,8 @@ void organize_three (t_stack **stack_a)
         rotate_a(stack_a, 1);
         organize_three(stack_a);
     }
-    if (first->value < second->value && second->value > third->value) {
+    if (first->value < second->value && second->value > third->value) 
+	{
         // Si el segundo elemento es el más grande entre los tres, rota hacia abajo para dejar el tercer elemento en la parte superior
         reverse_rotate_a(stack_a, 1);
         organize_three(stack_a);
@@ -37,7 +39,7 @@ void organize_three (t_stack **stack_a)
 	}	
 }
 
-void asign_position(t_stack **stack)
+void assign_position(t_stack **stack)
 {
 	t_stack *current;
 	int pos;
@@ -105,7 +107,7 @@ void calculate_objectives(t_stack **stack_a, t_stack **stack_b)
 			copy_b->objetive = min_index(stack_a)->pos;
 		rest = max_objetive->index - copy_b->index;
 		calculate_near(copy_a, copy_b, &rest);
-		copy_a = stack_a;
+		copy_a = *stack_a;
 		copy_b = copy_b->next;
 	}
 }
