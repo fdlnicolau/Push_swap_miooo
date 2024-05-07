@@ -1,0 +1,67 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lnicolau <lnicolau@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/03 14:22:47 by lnicolau          #+#    #+#             */
+/*   Updated: 2024/05/06 23:45:09 by lnicolau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../inc/push_swap.h"
+
+int abs_value(int num)
+{
+	if(num < 0)
+		return(-num);
+	else
+		return(num);	
+}
+
+ int list_sorted (t_stack **stack)
+{
+	t_stack *tmp;
+
+	tmp = *stack;
+	if(!tmp)
+		return(TRUE); //indicar que una lista vacía se considera ordenada.
+	
+	while(tmp && tmp->next)//mientras haya numeros en la pila
+	{
+		if(tmp->value > tmp->next->value)
+			return(FALSE);
+		tmp = tmp->next;
+	}
+	return(TRUE);
+}
+
+t_stack*	transfer_stack(char *string_value, t_stack *ptr_stack)
+{
+	t_stack 	*current;
+	t_stack 	*new_node;
+	long 		value;
+	
+	value = ft_atol(string_value);
+	if (value < -2147483648 || value > 2147483647)
+			return (NULL);
+	new_node = malloc(sizeof(t_stack*));
+	if(new_node == NULL)
+		return(NULL);
+	new_node->value = value;
+	new_node->next = NULL;
+
+	if(ptr_stack == NULL)
+		ptr_stack = new_node;
+	else
+	{
+		current = ptr_stack;
+		while(current->next != NULL)
+		{
+			current = current->next;
+		}
+		current->next = new_node;
+	}
+	return(ptr_stack);
+}
